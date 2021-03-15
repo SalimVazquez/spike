@@ -1,0 +1,32 @@
+name: Flutter CI
+
+on:
+  push:
+    branches:
+    - angel-develop
+    - rocio-develop
+    - uriel-develop
+    - salim-develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Setup Java environment
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '8.0.x'
+
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'dev'
+          flutter-version: '1.26.x' 
+      # Setup flutter dependencies
+      - run: flutter pub get
+
+      # Check for any formatting issues
+      - run: flutter format --set-exit-if-changed .
+
+      # Run Widget test
+      - run: flutter test
