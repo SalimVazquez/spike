@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'src/pages/login.dart';
 import 'src/pages/register.dart';
 import 'src/pages/user/dashboard.dart';
+import 'src/pages/user/update.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -12,6 +13,7 @@ void main() {
       '/': (context) => Login(),
       '/register': (context) => Register(),
       '/dashboard': (context) => Dashboard(),
+      '/update': (context) => Update(),
     },
   ));
 }
