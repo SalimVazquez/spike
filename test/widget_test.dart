@@ -10,10 +10,18 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:spike/src/pages/login.dart';
 
+import '../lib/src/pages/register.dart';
+
 Widget testWidgetLogin = new MediaQuery(
     data: new MediaQueryData(),
     child: new MaterialApp(
       home: Login(),
+    ));
+
+Widget testWidgetRegister = new MediaQuery(
+    data: new MediaQueryData(),
+    child: new MaterialApp(
+      home: Register(),
     ));
 
 void main() {
@@ -29,6 +37,29 @@ void main() {
     testWidgets('Create an account', (WidgetTester tester) async {
       await tester.pumpWidget(testWidgetLogin);
       expect(find.text('Create an account'), findsOneWidget);
+    });
+  });
+
+  group('Register Widget Test', () {
+    testWidgets('Sing Up', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetRegister);
+      expect(find.text('Sing Up'), findsOneWidget);
+    });
+    testWidgets('Submit', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetRegister);
+      expect(find.text('Submit'), findsOneWidget);
+    });
+    testWidgets('Please enter your email', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetRegister);
+      expect(find.text('Please enter your email'), findsOneWidget);
+    });
+    testWidgets('Please enter your password', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetRegister);
+      expect(find.text('Please enter your password'), findsOneWidget);
+    });
+    testWidgets('Please confirm your password', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetRegister);
+      expect(find.text('Please confirm your password'), findsOneWidget);
     });
   });
 }
