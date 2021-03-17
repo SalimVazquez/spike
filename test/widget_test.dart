@@ -10,21 +10,56 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:spike/src/pages/login.dart';
 
+import '../lib/src/pages/register.dart';
+
+Widget testWidgetLogin = new MediaQuery(
+    data: new MediaQueryData(),
+    child: new MaterialApp(
+      home: Login(),
+    ));
+
+Widget testWidgetRegister = new MediaQuery(
+    data: new MediaQueryData(),
+    child: new MaterialApp(
+      home: Register(),
+    ));
+
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(Login());
+  group('Home Page Login Widget Test', () {
+    testWidgets('Sing in', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetLogin);
+      expect(find.text('Sing In'), findsOneWidget);
+    });
+    testWidgets('Submit', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetLogin);
+      expect(find.text('Submit'), findsOneWidget);
+    });
+    testWidgets('Create an account', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetLogin);
+      expect(find.text('Create an account'), findsOneWidget);
+    });
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  group('Register Widget Test', () {
+    testWidgets('Sing Up', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetRegister);
+      expect(find.text('Sing Up'), findsOneWidget);
+    });
+    testWidgets('Submit', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetRegister);
+      expect(find.text('Submit'), findsOneWidget);
+    });
+    testWidgets('Please enter your email', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetRegister);
+      expect(find.text('Please enter your email'), findsOneWidget);
+    });
+    testWidgets('Please enter your password', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetRegister);
+      expect(find.text('Please enter your password'), findsOneWidget);
+    });
+    testWidgets('Please confirm your password', (WidgetTester tester) async {
+      await tester.pumpWidget(testWidgetRegister);
+      expect(find.text('Please confirm your password'), findsOneWidget);
+    });
   });
 }
