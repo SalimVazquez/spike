@@ -25,8 +25,5 @@ jobs:
       # Setup flutter dependencies
       - run: flutter pub get
 
-      # Check for any formatting issues
-      - run: flutter format --set-exit-if-changed .
-
       # Run Widget test
       - run: flutter test
