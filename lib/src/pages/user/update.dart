@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:spike/src/models/User.dart';
+import 'package:spike/src/services/api.dart';
 
 class Update extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final User user = ModalRoute.of(context).settings.arguments;
+    var _name = TextEditingController();
+    _name.text = user.getName();
+    var _lastName = TextEditingController();
+    _lastName.text = user.getLastName();
+    var _age = TextEditingController();
+    _age.text = user.getAge().toString();
+    var _address = TextEditingController();
+    _address.text = user.getAddress();
+    var _email = TextEditingController();
+    _email.text = user.getEmail();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -106,51 +119,42 @@ class Update extends StatelessWidget {
                         Divider(),
                         CircleAvatar(
                           radius: 55,
-                          backgroundColor: Color.fromRGBO(225, 225, 225, 1),
-                          child: IconButton(
-                            icon: Icon(Icons.camera_alt_sharp),
-                            color: Color.fromRGBO(195, 195, 195, 1),
-                            iconSize: 35,
-                            onPressed: () {},
-                          ),
+                          backgroundImage:
+                              AssetImage('assets/images/userProfile.png'),
                         ),
                         Padding(
                           padding: EdgeInsets.all(20),
                           child: TextField(
-                            decoration: InputDecoration(labelText: 'Full Name'),
+                            controller: _name,
+                            decoration: InputDecoration(labelText: 'Name'),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(20.0),
                           child: TextField(
+                            controller: _lastName,
+                            decoration: InputDecoration(labelText: 'Last Name'),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: TextField(
+                            controller: _address,
                             decoration: InputDecoration(labelText: 'Address'),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(20.0),
                           child: TextField(
+                            controller: _age,
                             decoration: InputDecoration(labelText: 'Age'),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(20.0),
                           child: TextField(
+                            controller: _email,
                             decoration: InputDecoration(labelText: 'Email'),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: TextField(
-                            decoration: InputDecoration(labelText: 'Password'),
-                            obscureText: true,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: TextField(
-                            decoration: InputDecoration(
-                                labelText: 'Confirm your password'),
-                            obscureText: true,
                           ),
                         ),
                         Padding(
@@ -162,7 +166,15 @@ class Update extends StatelessWidget {
                               shape: new RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(5.0)),
                               onPressed: () {
-                                Navigator.pushNamed(context, '/dashboard');
+                                API api = new API();
+                                api.update(context,
+                                    id: user.getId(),
+                                    name: _name.text,
+                                    lastName: _lastName.text,
+                                    age: int.parse(_age.text),
+                                    address: _address.text,
+                                    email: _email.text,
+                                    token: user.getToken());
                               },
                               textColor: Colors.white,
                               child: Text(
