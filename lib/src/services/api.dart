@@ -4,14 +4,13 @@ import 'package:spike/src/models/User.dart';
 
 class API {
   final Dio _dio = Dio();
-  final api = "http://192.168.1.74:8000/api";
+  final api = "http://your-ip/api";
 
   Future<void> register(
     BuildContext context, {
     @required String email,
     @required String password,
   }) async {
-    User user;
     try {
       final Response response = await this._dio.post(api + "/register",
           data: {"email": email, "password": password});
