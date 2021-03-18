@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:spike/src/services/api.dart';
 
 class Login extends StatelessWidget {
+  final _email = TextEditingController();
+  final _password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +47,7 @@ class Login extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(20.0),
                         child: TextField(
+                          controller: _email,
                           decoration: InputDecoration(
                               labelText: 'Please enter your email'),
                         ),
@@ -51,6 +55,7 @@ class Login extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(20.0),
                         child: TextField(
+                          controller: _password,
                           decoration: InputDecoration(
                               labelText: 'Please enter your password'),
                           obscureText: true,
@@ -65,7 +70,9 @@ class Login extends StatelessWidget {
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(5.0)),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/dashboard');
+                              API api = new API();
+                              api.login(context,
+                                  email: _email.text, password: _password.text);
                             },
                             textColor: Colors.white,
                             child: Text(
