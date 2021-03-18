@@ -37,7 +37,7 @@ class Login extends StatelessWidget {
                         padding: EdgeInsets.all(20.0),
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'Sing In',
+                          'Sign In',
                           style: TextStyle(
                               fontSize: 35,
                               fontWeight: FontWeight.bold,
