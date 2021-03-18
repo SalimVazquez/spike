@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:spike/src/models/User.dart';
 
 class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final User user = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -17,11 +19,11 @@ class Dashboard extends StatelessWidget {
           children: <Widget>[
             UserAccountsDrawerHeader(
               accountName: Text(
-                'Admin',
+                '${user.getName()}',
                 style: TextStyle(color: Colors.white),
               ),
               accountEmail: Text(
-                'admin@example.com',
+                '${user.getEmail()}',
                 style: TextStyle(color: Color.fromRGBO(240, 240, 240, 1)),
               ),
               currentAccountPicture: CircleAvatar(
@@ -85,8 +87,8 @@ class Dashboard extends StatelessWidget {
                     ),
                   ),
                 ),
-                _cardData(),
-                _cardAddress(),
+                _cardData(user),
+                _cardAddress(user),
                 Padding(
                   padding: EdgeInsets.all(15.0),
                   child: SizedBox(
@@ -96,7 +98,8 @@ class Dashboard extends StatelessWidget {
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(5.0)),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/update');
+                        Navigator.pushNamed(context, '/update',
+                            arguments: user);
                       },
                       textColor: Colors.white,
                       child: Text(
@@ -116,7 +119,7 @@ class Dashboard extends StatelessWidget {
   }
 }
 
-Widget _cardData() {
+Widget _cardData(User user) {
   return Container(
     child: Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -135,15 +138,9 @@ Widget _cardData() {
                 Column(
                   children: [
                     Text(
-                      'Magdalena de la Cruz Ordoñez',
+                      '${user.getName()}\n${user.getLastName()}',
                       style: TextStyle(
                           color: Color.fromRGBO(38, 193, 101, 1), fontSize: 16),
-                    ),
-                    Text(
-                      'Member since: 25 March, 2021',
-                      style: TextStyle(
-                          color: Color.fromRGBO(195, 195, 195, 1),
-                          fontSize: 14),
                     ),
                   ],
                 ),
@@ -158,7 +155,7 @@ Widget _cardData() {
                     Padding(
                       padding: EdgeInsets.only(top: 20),
                       child: Text(
-                        '25',
+                        '${user.getAge()}',
                         style: TextStyle(
                             color: Color.fromRGBO(38, 193, 101, 1),
                             fontSize: 16),
@@ -181,7 +178,7 @@ Widget _cardData() {
                     Padding(
                       padding: EdgeInsets.only(top: 20),
                       child: Text(
-                        'magda@example.com',
+                        '${user.getEmail()}',
                         style: TextStyle(
                             color: Color.fromRGBO(38, 193, 101, 1),
                             fontSize: 16),
@@ -207,7 +204,7 @@ Widget _cardData() {
   );
 }
 
-Widget _cardAddress() {
+Widget _cardAddress(User user) {
   return Container(
     child: SingleChildScrollView(
       child: Card(
@@ -230,7 +227,7 @@ Widget _cardAddress() {
             ),
             Flexible(
               child: Text(
-                'Avenida Puerto Angel S/N Colonia Centro CP. 70600',
+                '${user.getAddress()}',
                 style: TextStyle(
                     color: Color.fromRGBO(38, 193, 101, 1), fontSize: 18),
               ),
