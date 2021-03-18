@@ -59,7 +59,8 @@ class Update extends StatelessWidget {
                 color: Colors.black,
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/');
+                API api = new API();
+                api.logout(context, token: user.getToken());
               },
             ),
             Container(

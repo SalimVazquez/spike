@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spike/src/models/User.dart';
+import 'package:spike/src/services/api.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -48,7 +49,8 @@ class Dashboard extends StatelessWidget {
                 color: Colors.black,
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/');
+                API api = new API();
+                api.logout(context, token: user.getToken());
               },
             ),
             Container(
