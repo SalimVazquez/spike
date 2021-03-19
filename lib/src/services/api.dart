@@ -4,7 +4,7 @@ import 'package:spike/src/models/User.dart';
 
 class API {
   final Dio _dio = Dio();
-  final api = "http://your-ip/api";
+  final api = "http://your-ip:port/api";
 
   Future<void> register(
     BuildContext context, {
@@ -104,24 +104,6 @@ class API {
             response.data['data']['address']);
         Navigator.pushNamed(context, '/dashboard', arguments: user);
       }
-    } catch (e) {
-      if (e is DioError) {
-        if (e.response.statusCode == 401)
-          print("Credenciales incorrectas");
-        else {
-          print('Error status code ' + e.response.statusCode.toString());
-          print('Error server response ' + e.response.data.toString());
-        }
-      }
-      print('Error:' + e.toString());
-    }
-  }
-
-  Future<void> logout(BuildContext context, {@required String token}) async {
-    try {
-      final Response response = await this._dio.get(api + "/logout",
-          options: Options(headers: {"Authorization": "Bearer $token"}));
-      if (response.statusCode == 200) Navigator.pushNamed(context, '/');
     } catch (e) {
       if (e is DioError) {
         if (e.response.statusCode == 401)

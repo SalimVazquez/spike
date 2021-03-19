@@ -49,8 +49,7 @@ class Dashboard extends StatelessWidget {
                 color: Colors.black,
               ),
               onTap: () {
-                API api = new API();
-                api.logout(context, token: user.getToken());
+                Navigator.pushNamed(context, '/');
               },
             ),
             Container(
