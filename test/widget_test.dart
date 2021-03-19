@@ -1,118 +1,36 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:spike/src/pages/login.dart';
+import 'package:spike/src/pages/register.dart';
 
-import '../lib/src/pages/register.dart';
-import '../lib/src/pages/user/dashboard.dart';
-import '../lib/src/pages/user/update.dart';
-
-Widget testWidgetLogin = new MediaQuery(
-    data: new MediaQueryData(),
-    child: new MaterialApp(
-      home: Login(),
-    ));
-
-Widget testWidgetRegister = new MediaQuery(
-    data: new MediaQueryData(),
-    child: new MaterialApp(
-      home: Register(),
-    ));
-    
-Widget testWidgetUpdate = new MediaQuery(
-    data: new MediaQueryData(),
-    child: new MaterialApp(
-      home: Update(),
-    ));
-
-Widget testWidgetDashboard = new MediaQuery(
-    data: new MediaQueryData(),
-    child: new MaterialApp(
-      home: Dashboard(),
-    ));
+Widget createWidgetForTesting({Widget child}) {
+  return MaterialApp(
+    home: child,
+  );
+}
 
 void main() {
-  group('Home Page Login Widget Test', () {
-    testWidgets('Sing in', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetLogin);
-      expect(find.text('Sing In'), findsOneWidget);
-    });
-    testWidgets('Submit', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetLogin);
-      expect(find.text('Submit'), findsOneWidget);
-    });
-    testWidgets('Create an account', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetLogin);
-      expect(find.text('Create an account'), findsOneWidget);
-    });
+  testWidgets('Login page tests', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(createWidgetForTesting(child: new Login()));
+
+    // Verify text in the Login page.
+    expect(find.text('Sign In'), findsOneWidget);
+    expect(find.text('Submit'), findsOneWidget);
+    expect(find.text('Sign up'), findsNothing);
+    expect(find.text('Create an account'), findsOneWidget);
   });
 
-  group('Register Widget Test', () {
-    testWidgets('Sing Up', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetRegister);
-      expect(find.text('Sing Up'), findsOneWidget);
-    });
-    testWidgets('Submit', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetRegister);
-      expect(find.text('Submit'), findsOneWidget);
-    });
-    testWidgets('Please enter your email', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetRegister);
-      expect(find.text('Please enter your email'), findsOneWidget);
-    });
-    testWidgets('Please enter your password', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetRegister);
-      expect(find.text('Please enter your password'), findsOneWidget);
-    });
-    testWidgets('Please confirm your password', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetRegister);
-      expect(find.text('Please confirm your password'), findsOneWidget);
-    });
-  });
+  testWidgets('Sign up page tests', (WidgetTester tester) async {
+    // Build our app and trigger a frame
+    await tester.pumpWidget(createWidgetForTesting(child: new Register()));
 
-  
-  group('Update Widget Test', () {
-    testWidgets('Hi, Admin!', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetUpdate);
-      expect(find.text('Hi, Admin!'), findsOneWidget);
-    });
-    testWidgets('Edit my profile', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetUpdate);
-      expect(find.text('Edit my profile'), findsOneWidget);
-    });
-    testWidgets('Update my profile', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetUpdate);
-      expect(find.text('Update my profile'), findsOneWidget);
-    });
-  });
-  
-  group('Dashboard Widget Test', () {
-    testWidgets('Dashboard', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetDashboard);
-      expect(find.text('Dashboard'), findsOneWidget);
-    });
-    testWidgets('Hi, Admin!', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetDashboard);
-      expect(find.text('Hi, Admin!'), findsOneWidget);
-    });
-    testWidgets('Edit my profile', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetDashboard);
-      expect(find.text('Edit my profile'), findsOneWidget);
-    });
-    testWidgets('Age', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetDashboard);
-      expect(find.text('Age'), findsOneWidget);
-    });
-    testWidgets('Email', (WidgetTester tester) async {
-      await tester.pumpWidget(testWidgetDashboard);
-      expect(find.text('Email'), findsOneWidget);
-    });
+    // Verify text in the Sign up page
+    expect(find.text('Sign Up'), findsOneWidget);
+    expect(find.text('Please enter your email'), findsOneWidget);
+    expect(find.text('Please enter your password'), findsOneWidget);
+    expect(find.text('Submit'), findsOneWidget);
+    expect(find.text('Sign In'), findsNothing);
   });
 }
