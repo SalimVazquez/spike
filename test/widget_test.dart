@@ -28,7 +28,7 @@ void main() {
 
     // Verify text in the Sign up page
     expect(find.text('Sign Up'), findsOneWidget);
-    expect(find.text('Please enter your email'), findsOneWidget);
+    expect(find.text('Please enter your username'), findsOneWidget);
     expect(find.text('Please enter your password'), findsOneWidget);
     expect(find.text('Submit'), findsOneWidget);
     expect(find.text('Sign In'), findsNothing);
