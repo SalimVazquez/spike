@@ -147,7 +147,7 @@ class Update extends StatelessWidget {
                           padding: EdgeInsets.all(20.0),
                           child: TextField(
                             controller: _phone,
-                            decoration: InputDecoration(labelText: 'Age'),
+                            decoration: InputDecoration(labelText: 'Phone'),
                           ),
                         ),
                         Padding(
