@@ -16,6 +16,8 @@ class User {
       this._address,
       this._created]); // params optionals
 
+  User.forRegistration(this._token);
+
   @override
   String toString() {
     return "User #${this._userId}: ${this._name}";
