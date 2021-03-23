@@ -10,8 +10,8 @@ class Update extends StatelessWidget {
     _name.text = user.getName();
     var _lastName = TextEditingController();
     _lastName.text = user.getLastName();
-    var _age = TextEditingController();
-    _age.text = user.getAge().toString();
+    var _phone = TextEditingController();
+    _phone.text = user.getPhone().toString();
     var _address = TextEditingController();
     _address.text = user.getAddress();
     var _email = TextEditingController();
@@ -146,7 +146,7 @@ class Update extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(20.0),
                           child: TextField(
-                            controller: _age,
+                            controller: _phone,
                             decoration: InputDecoration(labelText: 'Age'),
                           ),
                         ),
@@ -171,7 +171,7 @@ class Update extends StatelessWidget {
                                     id: user.getId(),
                                     name: _name.text,
                                     lastName: _lastName.text,
-                                    age: int.parse(_age.text),
+                                    age: int.parse(_phone.text),
                                     address: _address.text,
                                     email: _email.text,
                                     token: user.getToken());
