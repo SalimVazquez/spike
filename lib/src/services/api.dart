@@ -8,23 +8,19 @@ class API {
 
   Future<void> register(
     BuildContext context, {
-    @required String email,
+    @required String username,
     @required String password,
   }) async {
     try {
-      final Response response = await this._dio.post(api + "/register",
-          data: {"email": email, "password": password});
-      if (response.statusCode == 200) {
-        User user = User(
-            response.data['data']['id'],
-            response.data['data']['email'],
-            response.data['data']['password'],
-            response.data['token'],
-            response.data['data']['name'],
-            response.data['data']['last_name'],
-            response.data['data']['age'],
-            null,
-            response.data['data']['address']);
+      final Response response = await this._dio.post(api + "/registration/",
+          data: {
+            "username": username,
+            "password1": password,
+            "password2": password
+          });
+      if (response.statusCode == 201) {
+        User user = User.forRegistration(response.data['key']);
+        print('Register OK!');
         Navigator.pushNamed(context, '/dashboard', arguments: user);
       }
     } catch (e) {
@@ -41,22 +37,15 @@ class API {
   }
 
   Future<void> login(BuildContext context,
-      {@required String email, @required String password}) async {
+      {@required String username, @required String password}) async {
     try {
-      final Response response = await this
-          ._dio
-          .post(api + "/login", data: {"email": email, "password": password});
+      final Response response = await this._dio.post(api + "/login/",
+          data: {"username": username, "password": password});
       if (response.statusCode == 200) {
-        User user = User(
-            response.data['data']['id'],
-            response.data['data']['email'],
-            response.data['data']['password'],
-            response.data['token'],
-            response.data['data']['name'],
-            response.data['data']['last_name'],
-            response.data['data']['age'],
-            null,
-            response.data['data']['address']);
+        print(response.data);
+        User user = User(response.data['name'], response.data['email'],
+            response.data['token'], response.data['user_id']);
+        print('Login OK!');
         Navigator.pushNamed(context, '/dashboard', arguments: user);
       }
     } catch (e) {

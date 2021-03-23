@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spike/src/services/api.dart';
 
 class Register extends StatelessWidget {
-  final _email = TextEditingController();
+  final _username = TextEditingController();
   final _pwd = TextEditingController();
   final _pwdCfd = TextEditingController();
   @override
@@ -48,9 +48,9 @@ class Register extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(20.0),
                         child: TextField(
-                          controller: _email,
+                          controller: _username,
                           decoration: InputDecoration(
-                              labelText: 'Please enter your email'),
+                              labelText: 'Please enter your username'),
                         ),
                       ),
                       Padding(
@@ -80,9 +80,13 @@ class Register extends StatelessWidget {
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(5.0)),
                             onPressed: () {
-                              API _api = new API();
-                              _api.register(context,
-                                  email: _email.text, password: _pwd.text);
+                              if (verifiedPwd(_pwd.text, _pwdCfd.text)) {
+                                API _api = new API();
+                                _api.register(context,
+                                    username: _username.text,
+                                    password: _pwd.text);
+                              } else
+                                print('Error contraseñas no coinciden');
                             },
                             textColor: Colors.white,
                             child: Text(
@@ -102,5 +106,10 @@ class Register extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool verifiedPwd(String text, String text2) {
+    bool aux = (text == text2) ? true : false;
+    return aux;
   }
 }

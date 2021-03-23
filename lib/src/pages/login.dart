@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spike/src/services/api.dart';
 
 class Login extends StatelessWidget {
-  final _email = TextEditingController();
+  final _username = TextEditingController();
   final _password = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -47,9 +47,9 @@ class Login extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(20.0),
                         child: TextField(
-                          controller: _email,
+                          controller: _username,
                           decoration: InputDecoration(
-                              labelText: 'Please enter your email'),
+                              labelText: 'Please enter your username'),
                         ),
                       ),
                       Padding(
@@ -72,7 +72,8 @@ class Login extends StatelessWidget {
                             onPressed: () {
                               API api = new API();
                               api.login(context,
-                                  email: _email.text, password: _password.text);
+                                  username: _username.text,
+                                  password: _password.text);
                             },
                             textColor: Colors.white,
                             child: Text(

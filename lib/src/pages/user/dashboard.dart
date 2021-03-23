@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spike/src/models/User.dart';
-import 'package:spike/src/services/api.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -156,7 +155,7 @@ Widget _cardData(User user) {
                     Padding(
                       padding: EdgeInsets.only(top: 20),
                       child: Text(
-                        '${user.getAge()}',
+                        '${user.getPhone()}',
                         style: TextStyle(
                             color: Color.fromRGBO(38, 193, 101, 1),
                             fontSize: 16),
