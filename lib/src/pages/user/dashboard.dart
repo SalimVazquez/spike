@@ -75,7 +75,7 @@ class Dashboard extends StatelessWidget {
               ),
             ],
           ),
-          Container(
+          SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 ListTile(
@@ -140,7 +140,7 @@ Widget _cardData(User user) {
                     Text(
                       '${user.getName()}\n${user.getLastName()}',
                       style: TextStyle(
-                          color: Color.fromRGBO(38, 193, 101, 1), fontSize: 16),
+                          color: Color.fromRGBO(38, 193, 101, 1), fontSize: 17),
                     ),
                   ],
                 ),
@@ -158,13 +158,13 @@ Widget _cardData(User user) {
                         '${user.getPhone()}',
                         style: TextStyle(
                             color: Color.fromRGBO(38, 193, 101, 1),
-                            fontSize: 16),
+                            fontSize: 15),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: Text(
-                        'Age',
+                        'Phone',
                         style: TextStyle(
                             color: Color.fromRGBO(195, 195, 195, 1),
                             fontSize: 14),
@@ -181,7 +181,7 @@ Widget _cardData(User user) {
                         '${user.getEmail()}',
                         style: TextStyle(
                             color: Color.fromRGBO(38, 193, 101, 1),
-                            fontSize: 16),
+                            fontSize: 15),
                       ),
                     ),
                     Padding(
