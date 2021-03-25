@@ -88,44 +88,38 @@ class API {
   }
 
   Future<void> update(BuildContext context,
-      {@required int id,
-      @required String name,
-      @required String lastName,
-      @required int age,
-      @required String address,
-      @required String email,
-      String token}) async {
+      {@required Map<String, dynamic> params, @required User user}) async {
     try {
-      final Response response = await this._dio.put(api + "/user-update/$id",
+      final Response response = await this._dio.put(
+          api + "/profile/profile_detail/${params['user']}/",
           data: {
-            "id": id,
-            "name": name,
-            "last_name": lastName,
-            "age": age,
-            "address": address,
-            "email": email
+            "name": params['name'],
+            "lastName": params['lastName'],
+            "phone": params['phone'],
+            "address": params['address'],
+            "email": params['email'],
+            "user": params['user']
           },
-          options: Options(headers: {"Authorization": "Bearer $token"}));
+          options:
+              Options(headers: {"Authorization": "Token ${params['token']}"}));
       if (response.statusCode == 200) {
-        User user = User(
-            response.data['data']['id'],
-            response.data['data']['email'],
-            response.data['data']['password'],
-            response.data['token'],
-            response.data['data']['name'],
-            response.data['data']['last_name'],
-            response.data['data']['age'],
-            null,
-            response.data['data']['address']);
+        user.setName(response.data['name']);
+        user.setLastName(response.data['lastName']);
+        user.setPhone(response.data['phone']);
+        user.setAddress(response.data['address']);
+        user.setEmail(response.data['email']);
+        user.setUserId(response.data['id']);
         Navigator.pushNamed(context, '/dashboard', arguments: user);
       }
     } catch (e) {
       if (e is DioError) {
-        if (e.response.statusCode == 401)
-          print("Credenciales incorrectas");
+        if (e.response.statusCode == 400)
+          print("Bad Request ${e.response.data}");
         else {
           print('Error status code ' + e.response.statusCode.toString());
           print('Error server response ' + e.response.data.toString());
+          print('Error server response message' +
+              e.response.statusMessage.toString());
         }
       }
       print('Error:' + e.toString());
