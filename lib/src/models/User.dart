@@ -2,7 +2,7 @@ class User {
   int _id;
   String _name;
   String _lastName;
-  int _phone;
+  String _phone;
   String _address;
   String _email;
   String _created;
@@ -35,7 +35,7 @@ class User {
     return this._lastName;
   }
 
-  int getPhone() {
+  String getPhone() {
     return this._phone;
   }
 
@@ -57,5 +57,37 @@ class User {
 
   String getCreated() {
     return this._created;
+  }
+
+  void setId(int id) {
+    this._id = id;
+  }
+
+  void setName(String name) {
+    this._name = name;
+  }
+
+  void setLastName(String lastName) {
+    this._lastName = lastName;
+  }
+
+  void setPhone(String phone) {
+    this._phone = phone;
+  }
+
+  void setAddress(String address) {
+    this._address = address;
+  }
+
+  void setEmail(String email) {
+    this._email = email;
+  }
+
+  void setUserId(int userId) {
+    this._userId = userId;
+  }
+
+  void setToken(String token) {
+    this._token = token;
   }
 }
