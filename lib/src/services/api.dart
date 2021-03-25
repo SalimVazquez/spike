@@ -4,7 +4,7 @@ import 'package:spike/src/models/User.dart';
 
 class API {
   final Dio _dio = Dio();
-  final api = "http://your-ip:port/api";
+  final api = "http://34.239.109.204/api/v1";
 
   Future<void> register(
     BuildContext context, {
@@ -20,7 +20,6 @@ class API {
           });
       if (response.statusCode == 201) {
         User user = User.forRegistration(response.data['key']);
-        print('Register OK!');
         Navigator.pushNamed(context, '/dashboard', arguments: user);
       }
     } catch (e) {
@@ -42,16 +41,43 @@ class API {
       final Response response = await this._dio.post(api + "/login/",
           data: {"username": username, "password": password});
       if (response.statusCode == 200) {
-        print(response.data);
         User user = User(response.data['name'], response.data['email'],
             response.data['token'], response.data['user_id']);
-        print('Login OK!');
-        Navigator.pushNamed(context, '/dashboard', arguments: user);
+        profile(context, user: user);
       }
     } catch (e) {
       if (e is DioError) {
         if (e.response.statusCode == 401)
           print("Credenciales incorrectas");
+        else {
+          print('Error status code ' + e.response.statusCode.toString());
+          print('Error server response ' + e.response.data.toString());
+        }
+      }
+      print('Error:' + e.toString());
+    }
+  }
+
+  Future<void> profile(BuildContext context, {@required User user}) async {
+    try {
+      final Response response = await this._dio.get(
+          api + "/profile/profile_detail/${user.getUserId()}",
+          options:
+              Options(headers: {"Authorization": "Token ${user.getToken()}"}));
+      if (response.statusCode == 200) {
+        user.setId(response.data['id']);
+        user.setName(response.data['name']);
+        user.setLastName(response.data['lastName']);
+        user.setPhone(response.data['phone']);
+        user.setAddress(response.data['address']);
+        user.setEmail(response.data['email']);
+        user.setUserId(response.data['user']);
+        Navigator.pushNamed(context, '/dashboard', arguments: user);
+      }
+    } catch (e) {
+      if (e is DioError) {
+        if (e.response.statusCode == 404)
+          print("User not found");
         else {
           print('Error status code ' + e.response.statusCode.toString());
           print('Error server response ' + e.response.data.toString());
