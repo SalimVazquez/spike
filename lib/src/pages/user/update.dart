@@ -176,7 +176,7 @@ class Update extends StatelessWidget {
                                   "user": user.getUserId(),
                                   "token": user.getToken()
                                 };
-                                api.update(context, params: params, user: user);
+                                api.update(context, params: params);
                               },
                               textColor: Colors.white,
                               child: Text(

@@ -29,7 +29,7 @@ class API {
           print('Error server response ' + e.response.data.toString());
         }
       }
-      print('Error:' + e.toString());
+      print('Error register:' + e.toString());
     }
   }
 
@@ -38,11 +38,9 @@ class API {
     try {
       final Response response = await this._dio.post(api + "/login/",
           data: {"username": username, "password": password});
-      if (response.statusCode == 200) {
-        User user = User(response.data['name'], response.data['email'],
-            response.data['token'], response.data['user_id']);
-        profile(context, user: user);
-      }
+      if (response.statusCode == 200)
+        profile(context,
+            userId: response.data['user_id'], token: response.data['token']);
     } catch (e) {
       if (e is DioError) {
         if (e.response.statusCode == 401)
@@ -52,24 +50,19 @@ class API {
           print('Error server response ' + e.response.data.toString());
         }
       }
-      print('Error:' + e.toString());
+      print('Error login:' + e.toString());
     }
   }
 
-  Future<void> profile(BuildContext context, {@required User user}) async {
+  Future<void> profile(BuildContext context,
+      {@required userId, @required token}) async {
     try {
       final Response response = await this._dio.get(
-          api + "/profile/profile_detail/${user.getUserId()}",
-          options:
-              Options(headers: {"Authorization": "Token ${user.getToken()}"}));
+          api + "/profile/profile_detail/$userId",
+          options: Options(headers: {"Authorization": "Token $token"}));
       if (response.statusCode == 200) {
-        user.setId(int.parse(response.data['id']));
-        user.setName(response.data['name']);
-        user.setLastName(response.data['lastName']);
-        user.setPhone(response.data['phone']);
-        user.setAddress(response.data['address']);
-        user.setEmail(response.data['email']);
-        user.setUserId(int.parse(response.data['user']));
+        User user = User.fromJson(response.data[0]);
+        user.setToken(token);
         Navigator.pushNamed(context, '/dashboard', arguments: user);
       }
     } catch (e) {
@@ -81,12 +74,12 @@ class API {
           print('Error server response ' + e.response.data.toString());
         }
       }
-      print('Error:' + e.toString());
+      print('Error profile:' + e.toString());
     }
   }
 
   Future<void> update(BuildContext context,
-      {@required Map<String, dynamic> params, @required User user}) async {
+      {@required Map<String, dynamic> params}) async {
     try {
       final Response response = await this._dio.put(
           api + "/profile/profile_detail/${params['user']}/",
@@ -101,12 +94,7 @@ class API {
           options:
               Options(headers: {"Authorization": "Token ${params['token']}"}));
       if (response.statusCode == 200) {
-        user.setName(response.data['name']);
-        user.setLastName(response.data['lastName']);
-        user.setPhone(response.data['phone']);
-        user.setAddress(response.data['address']);
-        user.setEmail(response.data['email']);
-        user.setUserId(response.data['id']);
+        User user = User.fromJson(response.data[0]);
         Navigator.pushNamed(context, '/dashboard', arguments: user);
       }
     } catch (e) {
@@ -120,7 +108,7 @@ class API {
               e.response.statusMessage.toString());
         }
       }
-      print('Error:' + e.toString());
+      print('Error update:' + e.toString());
     }
   }
 }
