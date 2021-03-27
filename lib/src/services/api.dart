@@ -4,7 +4,7 @@ import 'package:spike/src/models/User.dart';
 
 class API {
   final Dio _dio = Dio();
-  final api = "http://34.239.109.204/api/v1";
+  final api = "http://ip-server/api/v1";
 
   Future<void> register(
     BuildContext context, {
@@ -18,10 +18,8 @@ class API {
             "password1": password,
             "password2": password
           });
-      if (response.statusCode == 201) {
-        User user = User.forRegistration(response.data['key']);
-        Navigator.pushNamed(context, '/dashboard', arguments: user);
-      }
+      if (response.statusCode == 201)
+        login(context, username: username, password: password);
     } catch (e) {
       if (e is DioError) {
         if (e.response.statusCode == 400)
@@ -65,13 +63,13 @@ class API {
           options:
               Options(headers: {"Authorization": "Token ${user.getToken()}"}));
       if (response.statusCode == 200) {
-        user.setId(response.data['id']);
+        user.setId(int.parse(response.data['id']));
         user.setName(response.data['name']);
         user.setLastName(response.data['lastName']);
         user.setPhone(response.data['phone']);
         user.setAddress(response.data['address']);
         user.setEmail(response.data['email']);
-        user.setUserId(response.data['user']);
+        user.setUserId(int.parse(response.data['user']));
         Navigator.pushNamed(context, '/dashboard', arguments: user);
       }
     } catch (e) {
