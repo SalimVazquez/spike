@@ -167,14 +167,16 @@ class Update extends StatelessWidget {
                                   borderRadius: new BorderRadius.circular(5.0)),
                               onPressed: () {
                                 API api = new API();
-                                api.update(context,
-                                    id: user.getId(),
-                                    name: _name.text,
-                                    lastName: _lastName.text,
-                                    age: int.parse(_phone.text),
-                                    address: _address.text,
-                                    email: _email.text,
-                                    token: user.getToken());
+                                Map<String, dynamic> params = {
+                                  "name": _name.text,
+                                  "lastName": _lastName.text,
+                                  "phone": _phone.text,
+                                  "address": _address.text,
+                                  "email": _email.text,
+                                  "user": user.getUserId(),
+                                  "token": user.getToken()
+                                };
+                                api.update(context, params: params);
                               },
                               textColor: Colors.white,
                               child: Text(
