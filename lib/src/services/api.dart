@@ -4,7 +4,7 @@ import 'package:spike/src/models/User.dart';
 
 class API {
   final Dio _dio = Dio();
-  final api = "http://your-ip:port/api";
+  final api = "http://ip-server/api/v1";
 
   Future<void> register(
     BuildContext context, {
@@ -18,11 +18,8 @@ class API {
             "password1": password,
             "password2": password
           });
-      if (response.statusCode == 201) {
-        User user = User.forRegistration(response.data['key']);
-        print('Register OK!');
-        Navigator.pushNamed(context, '/dashboard', arguments: user);
-      }
+      if (response.statusCode == 201)
+        login(context, username: username, password: password);
     } catch (e) {
       if (e is DioError) {
         if (e.response.statusCode == 400)
@@ -32,7 +29,7 @@ class API {
           print('Error server response ' + e.response.data.toString());
         }
       }
-      print('Error:' + e.toString());
+      print('Error register:' + e.toString());
     }
   }
 
@@ -41,13 +38,9 @@ class API {
     try {
       final Response response = await this._dio.post(api + "/login/",
           data: {"username": username, "password": password});
-      if (response.statusCode == 200) {
-        print(response.data);
-        User user = User(response.data['name'], response.data['email'],
-            response.data['token'], response.data['user_id']);
-        print('Login OK!');
-        Navigator.pushNamed(context, '/dashboard', arguments: user);
-      }
+      if (response.statusCode == 200)
+        profile(context,
+            userId: response.data['user_id'], token: response.data['token']);
     } catch (e) {
       if (e is DioError) {
         if (e.response.statusCode == 401)
@@ -57,52 +50,65 @@ class API {
           print('Error server response ' + e.response.data.toString());
         }
       }
-      print('Error:' + e.toString());
+      print('Error login:' + e.toString());
+    }
+  }
+
+  Future<void> profile(BuildContext context,
+      {@required userId, @required token}) async {
+    try {
+      final Response response = await this._dio.get(
+          api + "/profile/profile_detail/$userId",
+          options: Options(headers: {"Authorization": "Token $token"}));
+      if (response.statusCode == 200) {
+        User user = User.fromJson(response.data[0]);
+        user.setToken(token);
+        Navigator.pushNamed(context, '/dashboard', arguments: user);
+      }
+    } catch (e) {
+      if (e is DioError) {
+        if (e.response.statusCode == 404)
+          print("User not found");
+        else {
+          print('Error status code ' + e.response.statusCode.toString());
+          print('Error server response ' + e.response.data.toString());
+        }
+      }
+      print('Error profile:' + e.toString());
     }
   }
 
   Future<void> update(BuildContext context,
-      {@required int id,
-      @required String name,
-      @required String lastName,
-      @required int age,
-      @required String address,
-      @required String email,
-      String token}) async {
+      {@required Map<String, dynamic> params}) async {
     try {
-      final Response response = await this._dio.put(api + "/user-update/$id",
+      final Response response = await this._dio.put(
+          api + "/profile/profile_detail/${params['user']}/",
           data: {
-            "id": id,
-            "name": name,
-            "last_name": lastName,
-            "age": age,
-            "address": address,
-            "email": email
+            "name": params['name'],
+            "lastName": params['lastName'],
+            "phone": params['phone'],
+            "address": params['address'],
+            "email": params['email'],
+            "user": params['user']
           },
-          options: Options(headers: {"Authorization": "Bearer $token"}));
+          options:
+              Options(headers: {"Authorization": "Token ${params['token']}"}));
       if (response.statusCode == 200) {
-        User user = User(
-            response.data['data']['id'],
-            response.data['data']['email'],
-            response.data['data']['password'],
-            response.data['token'],
-            response.data['data']['name'],
-            response.data['data']['last_name'],
-            response.data['data']['age'],
-            null,
-            response.data['data']['address']);
+        User user = User.fromJson(response.data[0]);
         Navigator.pushNamed(context, '/dashboard', arguments: user);
       }
     } catch (e) {
       if (e is DioError) {
-        if (e.response.statusCode == 401)
-          print("Credenciales incorrectas");
+        if (e.response.statusCode == 400)
+          print("Bad Request ${e.response.data}");
         else {
           print('Error status code ' + e.response.statusCode.toString());
           print('Error server response ' + e.response.data.toString());
+          print('Error server response message' +
+              e.response.statusMessage.toString());
         }
       }
-      print('Error:' + e.toString());
+      print('Error update:' + e.toString());
     }
   }
 }

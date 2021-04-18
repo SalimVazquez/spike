@@ -1,61 +1,75 @@
+import 'package:flutter/cupertino.dart';
+
 class User {
-  int _id;
-  String _name;
-  String _lastName;
-  int _phone;
-  String _address;
-  String _email;
-  String _created;
-  int _userId;
-  String _token;
+  final int id;
+  final String name;
+  final String lastName;
+  final String phone;
+  final String address;
+  final String email;
+  final int userId;
+  String token;
 
-  User(this._name, this._email, this._token, this._userId, //params required
-      [this._lastName,
-      this._id,
-      this._phone,
-      this._address,
-      this._created]); // params optionals
-
-  User.forRegistration(this._token);
+  User(
+      {@required this.id,
+      @required this.name,
+      @required this.lastName,
+      @required this.phone,
+      @required this.address,
+      @required this.email,
+      @required this.token,
+      @required this.userId});
 
   @override
   String toString() {
-    return "User #${this._userId}: ${this._name}";
+    return "User #${this.userId}: ${this.name}";
   }
 
   int getId() {
-    return this._id;
+    return this.id;
   }
 
   String getName() {
-    return this._name;
+    return this.name;
   }
 
   String getLastName() {
-    return this._lastName;
+    return this.lastName;
   }
 
-  int getPhone() {
-    return this._phone;
+  String getPhone() {
+    return this.phone;
   }
 
   String getAddress() {
-    return this._address;
+    return this.address;
   }
 
   String getEmail() {
-    return this._email;
+    return this.email;
   }
 
   int getUserId() {
-    return this._userId;
+    return this.userId;
   }
 
   String getToken() {
-    return this._token;
+    return this.token;
   }
 
-  String getCreated() {
-    return this._created;
+  void setToken(String token) {
+    this.token = token;
+  }
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+        id: json['id'],
+        lastName: json['lastName'],
+        phone: json['phone'],
+        address: json['address'],
+        name: json['name'],
+        email: json['email'],
+        token: json['token'],
+        userId: json['user']);
   }
 }
