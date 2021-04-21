@@ -4,7 +4,7 @@ import 'package:spike/src/models/User.dart';
 
 class API {
   final Dio _dio = Dio();
-  final api = "http://ip-server/api/v1";
+  final api = "http://34.239.109.204/api/v1";
 
   Future<void> register(
     BuildContext context, {
@@ -40,7 +40,8 @@ class API {
           data: {"username": username, "password": password});
       if (response.statusCode == 200)
         profile(context,
-            userId: response.data['user_id'], token: response.data['token']);
+            userId: response.data['user_id'].toString(),
+            token: response.data['token']);
     } catch (e) {
       if (e is DioError) {
         if (e.response.statusCode == 401)
@@ -59,7 +60,10 @@ class API {
     try {
       final Response response = await this._dio.get(
           api + "/profile/profile_detail/$userId",
-          options: Options(headers: {"Authorization": "Token $token"}));
+          options: Options(headers: {
+            "Authorization": "Token $token",
+            "Content-type": "application/json"
+          }));
       if (response.statusCode == 200) {
         User user = User.fromJson(response.data[0]);
         user.setToken(token);
@@ -91,8 +95,10 @@ class API {
             "email": params['email'],
             "user": params['user']
           },
-          options:
-              Options(headers: {"Authorization": "Token ${params['token']}"}));
+          options: Options(headers: {
+            "Authorization": "Token ${params['token']}",
+            "Content-type": "application/json"
+          }));
       if (response.statusCode == 200) {
         User user = User.fromJson(response.data[0]);
         Navigator.pushNamed(context, '/dashboard', arguments: user);
