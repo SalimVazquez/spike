@@ -6,7 +6,7 @@ import 'package:spike/src/models/User.dart';
 
 class API {
   final Dio _dio = Dio();
-  final api = "http://34.239.109.204/api/v1";
+  final api = "http://ip-server/api/v1";
 
   Future<void> register(
     BuildContext context, {
@@ -72,10 +72,11 @@ class API {
     try {
       final Response response = await this._dio.post(api + "/login/",
           data: {"username": username, "password": password});
-      if (response.statusCode == 200)
-        profile(context,
-            userId: response.data['user_id'].toString(),
-            token: response.data['token']);
+      if (response.statusCode == 200) {
+        User user = User.fromJson(response.data);
+        user.setToken(response.data['token']);
+        Navigator.pushNamed(context, '/dashboard', arguments: user);
+      }
     } catch (e) {
       if (e is DioError) {
         if (e.response.statusCode == 400) {
@@ -163,40 +164,4 @@ class API {
       print('Error profile:' + e.toString());
     }
   }
-
-  // Future<void> update(BuildContext context,
-  //     {@required Map<String, dynamic> params}) async {
-  //   try {
-  //     final Response response = await this._dio.put(
-  //         api + "/profile/profile_detail/${params['user']}/",
-  //         data: {
-  //           "name": params['name'],
-  //           "lastName": params['lastName'],
-  //           "phone": params['phone'],
-  //           "address": params['address'],
-  //           "email": params['email'],
-  //           "user": params['user']
-  //         },
-  //         options: Options(headers: {
-  //           "Authorization": "Token ${params['token']}",
-  //           "Content-type": "application/json"
-  //         }));
-  //     if (response.statusCode == 200) {
-  //       User user = User.fromJson(response.data[0]);
-  //       Navigator.pushNamed(context, '/dashboard', arguments: user);
-  //     }
-  //   } catch (e) {
-  //     if (e is DioError) {
-  //       if (e.response.statusCode == 400)
-  //         print("Bad Request ${e.response.data}");
-  //       else {
-  //         print('Error status code ' + e.response.statusCode.toString());
-  //         print('Error server response ' + e.response.data.toString());
-  //         print('Error server response message' +
-  //             e.response.statusMessage.toString());
-  //       }
-  //     }
-  //     print('Error update:' + e.toString());
-  //   }
-  // }
 }

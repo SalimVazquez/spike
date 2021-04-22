@@ -19,7 +19,6 @@ void main() {
       '/form': (context) => FormUser(),
       '/list': (context) => List(),
       '/profile': (context) => Profile(),
-      // '/update': (context) => Update(),
     },
   ));
 }
