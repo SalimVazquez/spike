@@ -2,24 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:spike/src/models/User.dart';
 import 'package:spike/src/services/api.dart';
 
-class Update extends StatelessWidget {
+class FormUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final User user = ModalRoute.of(context).settings.arguments;
     var _name = TextEditingController();
-    _name.text = user.getName();
     var _lastName = TextEditingController();
-    _lastName.text = user.getLastName();
     var _phone = TextEditingController();
-    _phone.text = user.getPhone().toString();
     var _address = TextEditingController();
-    _address.text = user.getAddress();
     var _email = TextEditingController();
-    _email.text = user.getEmail();
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Profile',
+          'Formulario',
           style: TextStyle(color: Colors.white),
         ),
         iconTheme: IconThemeData(color: Colors.white),
@@ -30,12 +25,8 @@ class Update extends StatelessWidget {
           children: <Widget>[
             UserAccountsDrawerHeader(
               accountName: Text(
-                'Admin',
+                'Nombre de usuario',
                 style: TextStyle(color: Colors.white),
-              ),
-              accountEmail: Text(
-                'admin@example.com',
-                style: TextStyle(color: Color.fromRGBO(240, 240, 240, 1)),
               ),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('assets/images/userProfile.png'),
@@ -53,6 +44,17 @@ class Update extends StatelessWidget {
             ),
             Divider(),
             ListTile(
+              title: Text('Users'),
+              leading: Icon(
+                Icons.people_alt,
+                color: Colors.black,
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, '/list');
+              },
+            ),
+            Divider(),
+            ListTile(
               title: Text('Log Out'),
               leading: Icon(
                 Icons.logout,
@@ -63,7 +65,7 @@ class Update extends StatelessWidget {
               },
             ),
             Container(
-              margin: EdgeInsets.only(top: 400),
+              margin: EdgeInsets.only(top: 350),
               alignment: Alignment.bottomCenter,
               padding: EdgeInsets.all(20.0),
               child: Image.asset('assets/images/logoSpike.png'),
@@ -112,7 +114,7 @@ class Update extends StatelessWidget {
                               EdgeInsets.only(left: 20.0, top: 15, bottom: 5),
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Edit my profile',
+                            'Personal Form',
                             style: TextStyle(fontSize: 18, color: Colors.black),
                           ),
                         ),
@@ -139,15 +141,15 @@ class Update extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(20.0),
                           child: TextField(
-                            controller: _address,
-                            decoration: InputDecoration(labelText: 'Address'),
+                            controller: _phone,
+                            decoration: InputDecoration(labelText: 'Phone'),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(20.0),
                           child: TextField(
-                            controller: _phone,
-                            decoration: InputDecoration(labelText: 'Phone'),
+                            controller: _address,
+                            decoration: InputDecoration(labelText: 'Address'),
                           ),
                         ),
                         Padding(
@@ -165,22 +167,10 @@ class Update extends StatelessWidget {
                             child: RaisedButton(
                               shape: new RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(5.0)),
-                              onPressed: () {
-                                API api = new API();
-                                Map<String, dynamic> params = {
-                                  "name": _name.text,
-                                  "lastName": _lastName.text,
-                                  "phone": _phone.text,
-                                  "address": _address.text,
-                                  "email": _email.text,
-                                  "user": user.getUserId(),
-                                  "token": user.getToken()
-                                };
-                                //api.update(context, params: params);
-                              },
+                              onPressed: () {},
                               textColor: Colors.white,
                               child: Text(
-                                'Update my profile',
+                                'Save',
                                 style: TextStyle(fontSize: 18),
                               ),
                               color: Color.fromRGBO(38, 193, 101, 1),
@@ -190,7 +180,7 @@ class Update extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),

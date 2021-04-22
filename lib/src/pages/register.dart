@@ -1,3 +1,4 @@
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:spike/src/services/api.dart';
 
@@ -86,7 +87,23 @@ class Register extends StatelessWidget {
                                     username: _username.text,
                                     password: _pwd.text);
                               } else
-                                print('Error contraseñas no coinciden');
+                                Alert(
+                                  context: context,
+                                  type: AlertType.error,
+                                  title: "ERROR",
+                                  desc: "Las contraseñas no coinciden",
+                                  buttons: [
+                                    DialogButton(
+                                      child: Text(
+                                        "OK",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () => Navigator.pop(context),
+                                      width: 120,
+                                    )
+                                  ],
+                                ).show();
                             },
                             textColor: Colors.white,
                             child: Text(
