@@ -186,18 +186,19 @@ class API {
     }
   }
 
-  Future<void> profile(BuildContext context,
-      {@required userId, @required token}) async {
+  Future<void> list(
+      {@required BuildContext context, @required User user}) async {
     try {
       final Response response = await this._dio.get(
-          api + "/profile/profile_detail/$userId",
+          api + "/profile/profile_detail/${user.getUserId()}",
           options: Options(headers: {
-            "Authorization": "Token $token",
+            "Authorization": "Token ${user.getToken()}",
             "Content-type": "application/json"
           }));
       if (response.statusCode == 200) {
-        User user = User.fromJson(response.data);
-        user.setToken(token);
+        print(response.data);
+
+        print('length ${user.getChildrens().length}');
         Navigator.pushNamed(context, '/list', arguments: user);
       }
     } catch (e) {

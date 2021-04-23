@@ -51,8 +51,7 @@ class Dashboard extends StatelessWidget {
               ),
               onTap: () {
                 API api = new API();
-                api.profile(context,
-                    userId: user.getUserId(), token: user.getToken());
+                api.list(context: context, user: user);
               },
             ),
             Divider(),

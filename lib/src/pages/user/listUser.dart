@@ -70,7 +70,7 @@ class List extends StatelessWidget {
       ),
       body: ListView.builder(
         padding: EdgeInsets.all(10),
-        itemCount: user.getId(),
+        itemCount: user.getChildrens().length,
         itemBuilder: (context, index) {
           return Container(
             height: 70,

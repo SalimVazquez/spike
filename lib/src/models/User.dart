@@ -9,6 +9,7 @@ class User {
   final String email;
   final int userId;
   String token;
+  List<User> childrens;
 
   User(
       {@required this.id,
@@ -59,6 +60,14 @@ class User {
 
   void setToken(String token) {
     this.token = token;
+  }
+
+  void addChildren(User user) {
+    childrens.add(user);
+  }
+
+  List<User> getChildrens() {
+    return childrens;
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
