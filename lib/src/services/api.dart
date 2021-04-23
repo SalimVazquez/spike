@@ -140,6 +140,7 @@ class API {
             "Content-type": "application/json"
           }));
       if (response.statusCode == 200) {
+        Navigator.pop(context);
         Alert(
           context: context,
           type: AlertType.success,
@@ -155,7 +156,6 @@ class API {
             )
           ],
         ).show();
-        Navigator.pushNamed(context, '/list');
       }
     } catch (e) {
       if (e is DioError) {
