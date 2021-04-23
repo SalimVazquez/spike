@@ -6,7 +6,7 @@ import 'package:spike/src/models/User.dart';
 
 class API {
   final Dio _dio = Dio();
-  final api = "http://ip-server/api/v1";
+  final api = "http://34.239.109.204/api/v1";
 
   Future<void> register(
     BuildContext context, {
@@ -119,6 +119,70 @@ class API {
         ],
       ).show();
       // print('Error login:' + e.toString());
+    }
+  }
+
+  Future<void> addUser(BuildContext context,
+      {@required Map<String, dynamic> params}) async {
+    try {
+      final Response response = await this._dio.post(
+          api + "/profile/profile_list/",
+          data: {
+            "name": params['name'],
+            "lastName": params['lastName'],
+            "phone": params['phone'],
+            "address": params['address'],
+            "email": params['email'],
+            "user": params['user']
+          },
+          options: Options(headers: {
+            "Authorization": "Token ${params['token']}",
+            "Content-type": "application/json"
+          }));
+      if (response.statusCode == 200) {
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Usuario registrado",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "OK",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+        Navigator.pushNamed(context, '/list');
+      }
+    } catch (e) {
+      if (e is DioError) {
+        if (e.response.statusCode == 401) {
+          Alert(
+            context: context,
+            type: AlertType.error,
+            title: "ERROR",
+            desc: "Token faltante",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "OK",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context),
+                width: 120,
+              )
+            ],
+          ).show();
+          print("User session not found");
+        } else {
+          print('Error status code ' + e.response.statusCode.toString());
+          print('Error server response ' + e.response.data.toString());
+        }
+      }
+      print('Error profile:' + e.toString());
     }
   }
 

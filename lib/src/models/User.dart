@@ -70,6 +70,6 @@ class User {
         name: json['name'],
         email: json['email'],
         token: json['token'],
-        userId: json['user']);
+        userId: json['user_id']);
   }
 }

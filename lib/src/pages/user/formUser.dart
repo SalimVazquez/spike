@@ -167,7 +167,19 @@ class FormUser extends StatelessWidget {
                             child: RaisedButton(
                               shape: new RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(5.0)),
-                              onPressed: () {},
+                              onPressed: () {
+                                Map<String, dynamic> params = {
+                                  "name": _name.text,
+                                  "lastName": _lastName.text,
+                                  "phone": _phone.text,
+                                  "address": _address.text,
+                                  "email": _email.text,
+                                  "user": user.getUserId(),
+                                  "token": user.getToken()
+                                };
+                                API api = new API();
+                                api.addUser(context, params: params);
+                              },
                               textColor: Colors.white,
                               child: Text(
                                 'Save',

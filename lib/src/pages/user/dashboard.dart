@@ -25,7 +25,7 @@ class Dashboard extends StatelessWidget {
           children: <Widget>[
             UserAccountsDrawerHeader(
               accountName: Text(
-                'Nombre del admin',
+                '${user.getName()}',
                 style: TextStyle(color: Colors.white),
               ),
               currentAccountPicture: CircleAvatar(
@@ -102,7 +102,7 @@ class Dashboard extends StatelessWidget {
                     ),
                   ),
                 ),
-                _cardWelcome(),
+                _cardWelcome(user),
                 Padding(
                   padding: EdgeInsets.all(20),
                   child: Text(
@@ -120,10 +120,7 @@ class Dashboard extends StatelessWidget {
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(5.0)),
                       onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/form',
-                        );
+                        Navigator.pushNamed(context, '/form', arguments: user);
                       },
                       textColor: Colors.white,
                       child: Text(
@@ -143,7 +140,7 @@ class Dashboard extends StatelessWidget {
   }
 }
 
-Widget _cardWelcome() {
+Widget _cardWelcome(User user) {
   return Container(
     child: SingleChildScrollView(
       child: Column(
@@ -160,7 +157,7 @@ Widget _cardWelcome() {
                   Padding(
                     padding: EdgeInsets.all(20),
                     child: Text(
-                      'HELLO ADMIN',
+                      'HELLO ${user.getName()}',
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
