@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spike/src/models/ScreenArguments.dart';
 import 'package:spike/src/models/User.dart';
 import 'package:spike/src/services/api.dart';
 
@@ -97,7 +98,8 @@ class List extends StatelessWidget {
               trailing: Icon(Icons.arrow_forward_ios_rounded),
               onTap: () {
                 Navigator.pushNamed(context, '/profile',
-                    arguments: user.getChildrens()[index]);
+                    arguments:
+                        ScreenArguments(user, user.getChildrens()[index]));
               },
             ),
           );

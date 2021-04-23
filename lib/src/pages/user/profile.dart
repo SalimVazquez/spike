@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:spike/src/models/ScreenArguments.dart';
 import 'package:spike/src/models/User.dart';
 import 'package:spike/src/services/api.dart';
 
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final User user = ModalRoute.of(context).settings.arguments;
+    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -35,7 +36,8 @@ class Profile extends StatelessWidget {
                 color: Colors.black,
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/dashboard', arguments: user);
+                Navigator.pushNamed(context, '/dashboard',
+                    arguments: args.admin);
               },
             ),
             Divider(),
@@ -47,7 +49,7 @@ class Profile extends StatelessWidget {
               ),
               onTap: () {
                 API api = new API();
-                api.list(context: context, user: user);
+                api.list(context: context, user: args.admin);
               },
             ),
             Divider(),
@@ -92,13 +94,13 @@ class Profile extends StatelessWidget {
                   contentPadding: EdgeInsets.only(left: 20, right: 20, top: 10),
                   title: Center(
                     child: Text(
-                      'Hi, Admin!',
+                      'Hi, ${args.admin.getName()}!',
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
                 ),
-                _cardData(user),
-                _cardAddress(user),
+                _cardData(args.guest),
+                _cardAddress(args.guest),
                 // Padding(
                 //   padding: EdgeInsets.all(15.0),
                 //   child: SizedBox(
