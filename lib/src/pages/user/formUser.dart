@@ -99,7 +99,7 @@ class FormUser extends StatelessWidget {
                   contentPadding: EdgeInsets.only(left: 20, right: 20, top: 10),
                   title: Center(
                     child: Text(
-                      'Hi, Admin!',
+                      'Hi, ${user.getName()}!',
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),

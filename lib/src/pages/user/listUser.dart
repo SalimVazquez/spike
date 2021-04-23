@@ -21,7 +21,7 @@ class List extends StatelessWidget {
           children: <Widget>[
             UserAccountsDrawerHeader(
               accountName: Text(
-                'Nombre del usuario',
+                '${user.getName()}',
                 style: TextStyle(color: Colors.white),
               ),
               currentAccountPicture: CircleAvatar(
@@ -104,13 +104,6 @@ class List extends StatelessWidget {
             ),
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/form');
-        },
-        child: const Icon(Icons.add),
-        backgroundColor: Color.fromRGBO(38, 193, 101, 1),
       ),
     );
   }
