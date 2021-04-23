@@ -189,6 +189,8 @@ class API {
   Future<void> list(
       {@required BuildContext context, @required User user}) async {
     try {
+      if (user.getChildrens().length != 0) user.getChildrens().clear();
+
       final Response response = await this._dio.get(
           api + "/profile/profile_detail/${user.getUserId()}",
           options: Options(headers: {
