@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spike/src/models/User.dart';
+import 'package:spike/src/services/api.dart';
 
 class List extends StatelessWidget {
   @override
@@ -25,6 +26,7 @@ class List extends StatelessWidget {
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('assets/images/userProfile.png'),
               ),
+              accountEmail: null,
             ),
             ListTile(
               title: Text('Dashboard'),
@@ -33,7 +35,7 @@ class List extends StatelessWidget {
                 color: Colors.black,
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/dashboard');
+                Navigator.pushNamed(context, '/dashboard', arguments: user);
               },
             ),
             Divider(),
@@ -44,7 +46,8 @@ class List extends StatelessWidget {
                 color: Colors.black,
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/list', arguments: user);
+                API api = new API();
+                api.list(context: context, user: user);
               },
             ),
             Divider(),
@@ -87,12 +90,14 @@ class List extends StatelessWidget {
                   )
                 ]),
             child: ListTile(
-              title: Text('${user.getName()} ${user.getLastName()}'),
-              subtitle: Text('${user.getEmail()}'),
+              title: Text(
+                  '${user.getChildrens()[index].getName()} ${user.getChildrens()[index].getLastName()}'),
+              subtitle: Text('${user.getChildrens()[index].getEmail()}'),
               leading: Icon(Icons.perm_contact_cal_sharp),
               trailing: Icon(Icons.arrow_forward_ios_rounded),
               onTap: () {
-                Navigator.pushNamed(context, '/profile', arguments: user);
+                Navigator.pushNamed(context, '/profile',
+                    arguments: user.getChildrens()[index]);
               },
             ),
           );

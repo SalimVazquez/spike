@@ -31,6 +31,7 @@ class Dashboard extends StatelessWidget {
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('assets/images/userProfile.png'),
               ),
+              accountEmail: null,
             ),
             ListTile(
               title: Text('Dashboard'),
@@ -39,7 +40,7 @@ class Dashboard extends StatelessWidget {
                 color: Colors.black,
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/dashboard');
+                Navigator.pushNamed(context, '/dashboard', arguments: user);
               },
             ),
             Divider(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spike/src/models/User.dart';
+import 'package:spike/src/services/api.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -25,6 +26,7 @@ class Profile extends StatelessWidget {
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('assets/images/userProfile.png'),
               ),
+              accountEmail: null,
             ),
             ListTile(
               title: Text('Dashboard'),
@@ -33,7 +35,7 @@ class Profile extends StatelessWidget {
                 color: Colors.black,
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/dashboard');
+                Navigator.pushNamed(context, '/dashboard', arguments: user);
               },
             ),
             Divider(),
@@ -44,7 +46,8 @@ class Profile extends StatelessWidget {
                 color: Colors.black,
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/list');
+                API api = new API();
+                api.list(context: context, user: user);
               },
             ),
             Divider(),

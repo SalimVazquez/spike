@@ -9,7 +9,7 @@ class User {
   final String email;
   final int userId;
   String token;
-  List<User> childrens;
+  List<User> childrens = [];
 
   User(
       {@required this.id,

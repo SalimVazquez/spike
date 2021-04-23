@@ -196,8 +196,9 @@ class API {
             "Content-type": "application/json"
           }));
       if (response.statusCode == 200) {
-        print(response.data);
-
+        (response.data as List)
+            .map((e) => user.addChildren(User.fromJson(e)))
+            .toList();
         print('length ${user.getChildrens().length}');
         Navigator.pushNamed(context, '/list', arguments: user);
       }

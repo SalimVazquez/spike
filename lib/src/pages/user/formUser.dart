@@ -31,6 +31,7 @@ class FormUser extends StatelessWidget {
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('assets/images/userProfile.png'),
               ),
+              accountEmail: null,
             ),
             ListTile(
               title: Text('Dashboard'),
@@ -39,7 +40,7 @@ class FormUser extends StatelessWidget {
                 color: Colors.black,
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/dashboard');
+                Navigator.pushNamed(context, '/dashboard', arguments: user);
               },
             ),
             Divider(),
@@ -50,7 +51,8 @@ class FormUser extends StatelessWidget {
                 color: Colors.black,
               ),
               onTap: () {
-                Navigator.pushNamed(context, '/list');
+                API api = new API();
+                api.list(context: context, user: user);
               },
             ),
             Divider(),
