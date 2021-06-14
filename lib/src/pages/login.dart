@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spike/src/services/api.dart';
+//import 'package:spike/src/services/api.dart';
 
 class Login extends StatelessWidget {
   final _username = TextEditingController();
@@ -70,10 +70,7 @@ class Login extends StatelessWidget {
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(5.0)),
                             onPressed: () {
-                              API api = new API();
-                              api.login(context,
-                                  username: _username.text,
-                                  password: _password.text);
+                              Navigator.pushNamed(context, '/home');
                             },
                             textColor: Colors.white,
                             child: Text(

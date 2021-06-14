@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'src/pages/login.dart';
 import 'src/pages/register.dart';
-import 'src/pages/user/dashboard.dart';
-import 'src/pages/user/formUser.dart';
-import 'src/pages/user/listUser.dart';
-import 'src/pages/user/profile.dart';
+import 'src/pages/home.dart';
+// import 'src/pages/user/dashboard.dart';
+// import 'src/pages/user/formUser.dart';
+// import 'src/pages/user/listUser.dart';
+// import 'src/pages/user/profile.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -14,10 +15,9 @@ void main() {
     routes: {
       '/': (context) => Login(),
       '/register': (context) => Register(),
-      '/dashboard': (context) => Dashboard(),
-      '/form': (context) => FormUser(),
-      '/list': (context) => List(),
-      '/profile': (context) => Profile(),
+      '/home': (context) => Home(),
+
+
     },
   ));
 }

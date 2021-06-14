@@ -1,11 +1,11 @@
-import 'package:rflutter_alert/rflutter_alert.dart';
+//import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:spike/src/services/api.dart';
+// import 'package:spike/src/services/api.dart';
 
 class Register extends StatelessWidget {
   final _username = TextEditingController();
+  final _email = TextEditingController();
   final _pwd = TextEditingController();
-  final _pwdCfd = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,18 +57,18 @@ class Register extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(20.0),
                         child: TextField(
-                          controller: _pwd,
+                          controller: _email,
                           decoration: InputDecoration(
-                              labelText: 'Please enter your password'),
+                              labelText: 'Please enter your email'),
                           obscureText: true,
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(20.0),
                         child: TextField(
-                          controller: _pwdCfd,
+                          controller: _pwd,
                           decoration: InputDecoration(
-                              labelText: 'Please confirm your password'),
+                              labelText: 'Please enter your password'),
                           obscureText: true,
                         ),
                       ),
@@ -81,29 +81,7 @@ class Register extends StatelessWidget {
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(5.0)),
                             onPressed: () {
-                              if (verifiedPwd(_pwd.text, _pwdCfd.text)) {
-                                API _api = new API();
-                                _api.register(context,
-                                    username: _username.text,
-                                    password: _pwd.text);
-                              } else
-                                Alert(
-                                  context: context,
-                                  type: AlertType.error,
-                                  title: "ERROR",
-                                  desc: "Las contraseñas no coinciden",
-                                  buttons: [
-                                    DialogButton(
-                                      child: Text(
-                                        "OK",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 20),
-                                      ),
-                                      onPressed: () => Navigator.pop(context),
-                                      width: 120,
-                                    )
-                                  ],
-                                ).show();
+                              Navigator.pushNamed(context, '/login');
                             },
                             textColor: Colors.white,
                             child: Text(
@@ -123,10 +101,5 @@ class Register extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  bool verifiedPwd(String text, String text2) {
-    bool aux = (text == text2) ? true : false;
-    return aux;
   }
 }
